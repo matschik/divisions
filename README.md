@@ -107,11 +107,22 @@ import { startDivisions } from "divisions";
 startDivisions().catch(console.error);
 ```
 
+By the end, your project structure should look like this:
+
+```sh
+.
+├── divisions
+│   └── http
+│       └── index.js
+├── index.js
+├── package.json
+```
+
 6. Launch it !
 
 ```sh
 ❯ node index.js
-# HTTP Server running at http://localhost:3000
+HTTP Server running at http://localhost:3000
 
 ❯ curl http://localhost:3000
 Hello from http division 👋
