@@ -1,0 +1,50 @@
+{
+  "name": "divisions",
+  "version": "0.1.0",
+  "description": "Efficient orchestration and management of modular divisions including validation, interdependencies.",
+  "main": "./dist/lib/index.js",
+  "types": "./dist/lib/index.d.ts",
+  "bin": {
+    "div": "./dist/bin/div.js"
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "check": "biome check --apply .",
+    "prepublishOnly": "pnpm run build",
+    "test": "vitest"
+  },
+  "keywords": [
+    "nodejs"
+  ],
+  "files": [
+    "bin",
+    "dist"
+  ],
+  "author": "Mathieu Schimmerling <mathieu.schimmerling@protonmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "ajv": "^8.12.0",
+    "citty": "^0.1.5",
+    "consola": "^3.2.3",
+    "depcheck": "^1.4.7",
+    "dotenv": "^16.4.1",
+    "execa": "^8.0.1",
+    "fast-glob": "^3.3.2",
+    "pkg-dir": "^8.0.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.5.3",
+    "@types/json-schema": "^7.0.15",
+    "@types/node": "^20.11.17",
+    "lint-staged": "^15.2.2",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.2"
+  },
+  "engines": {
+    "node": "^18.0.0 || >=20.0.0"
+  }
+}
