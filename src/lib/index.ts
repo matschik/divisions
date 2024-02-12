@@ -90,11 +90,18 @@ export async function createDivisions(options: DivisionsOptions = {}) {
 
   for (const divisionName of divisionNames) {
     const divisionRootPath = `${divisionsDirPath}/${divisionName}`;
-    const indexJsPath = `${divisionRootPath}/index.js`;
-    const indexJsPathExists = await pathExists(indexJsPath);
 
-    if (indexJsPathExists) {
-      const importedModule = await import(indexJsPath);
+    const indexJsPath = `${divisionRootPath}/index.js`;
+    const indexTsPath = `${divisionRootPath}/index.ts`;
+    let indexPath;
+    if (await pathExists(indexTsPath)) {
+      indexPath = indexTsPath;
+    } else if (await pathExists(indexJsPath)) {
+      indexPath = indexJsPath;
+    }
+
+    if (indexPath) {
+      const importedModule = await import(indexPath);
       const hasMeta =
         Boolean(importedModule?.meta) &&
         typeof importedModule.meta === "object";
