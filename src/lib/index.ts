@@ -17,7 +17,7 @@ type DivisionMeta = {
 };
 
 type DivisionSetup = (
-  param: DivisionSetupParam,
+  param: DivisionSetupParam
 ) => Promise<DivisionSetupResult>;
 
 type DivisionInfo = {
@@ -45,7 +45,7 @@ interface DivisionSetupParam {
 }
 
 type DivisionStart = (
-  param: DivisionStartParam,
+  param: DivisionStartParam
 ) => Promise<DivisionStartResult>;
 
 interface DivisionSetupResult {
@@ -135,7 +135,7 @@ export async function createDivisions(options: DivisionsOptions = {}) {
     const divisionEnvKeysMap = new Map<string, string[]>();
 
     for (const [divisionName, division] of Array.from(
-      divisionMap.entries(),
+      divisionMap.entries()
     ).filter(([_, division]) => division.hasMeta)) {
       const { envSchema } = division.meta;
       if (envSchema?.properties) {
@@ -151,7 +151,7 @@ export async function createDivisions(options: DivisionsOptions = {}) {
         },
         {
           envPath: options.envPath,
-        },
+        }
       );
 
       for (const [
@@ -180,7 +180,7 @@ export async function createDivisions(options: DivisionsOptions = {}) {
       Array.from(divisionMap.values()).map((division) => ({
         name: division.name,
         dependsOn: division.meta?.dependsOn || [],
-      })),
+      }))
     );
 
     const sortedDivisionMap = new Map<string, DivisionInfo>();
@@ -265,7 +265,7 @@ export async function createDivisions(options: DivisionsOptions = {}) {
         if (startResult?.cleanup) {
           if (typeof startResult.cleanup !== "function") {
             throw new Error(
-              `Division ${divisionName}: "cleanup" musts return a function`,
+              `Division ${divisionName}: "cleanup" musts return a function`
             );
           }
           cleanups.push(startResult.cleanup);
@@ -294,7 +294,7 @@ export async function createDivisions(options: DivisionsOptions = {}) {
     const commandsByDivision = new Map();
 
     for (const [divisionName, division] of Array.from(
-      divisionMap.entries(),
+      divisionMap.entries()
     ).filter(([_, division]) => division.hasCommands)) {
       const setupParam = divisionNameAndSetupParamMap.get(divisionName);
       if (!setupParam) {
@@ -375,7 +375,7 @@ export async function runDivisionCLI(options: DivisionsOptions = {}) {
       acc[commandConfig.meta.name] = defineCommand(commandConfig);
       return acc;
     },
-    {},
+    {}
   );
 
   runMain(
@@ -385,13 +385,13 @@ export async function runDivisionCLI(options: DivisionsOptions = {}) {
         description: "Commands exposed by each division",
       },
       subCommands,
-    }),
+    })
   );
 }
 
 function getDotenvAndValidate(
   schema: JSONSchema7,
-  options: DivisionsOptions = {},
+  options: DivisionsOptions = {}
 ) {
   const envKeysSet = new Set<string>();
   if (Array.isArray(schema.allOf)) {
@@ -405,7 +405,7 @@ function getDotenvAndValidate(
   }
 
   dotenv.config(
-    typeof options.envPath === "string" ? { path: options.envPath } : {},
+    typeof options.envPath === "string" ? { path: options.envPath } : {}
   );
 
   const divisionEnv = [...envKeysSet].reduce<Record<string, string>>(
@@ -416,7 +416,7 @@ function getDotenvAndValidate(
       }
       return acc;
     },
-    {},
+    {}
   );
 
   const ajv = new Ajv({ coerceTypes: true, allErrors: true });
@@ -461,7 +461,7 @@ function sortModules(modules: SimpleModule[]): SimpleModule[] {
 
     if (temporary.has(module.name)) {
       throw new Error(
-        `Circular dependency detected: ${stack.join(" -> ")} -> ${module.name}`,
+        `Circular dependency detected: ${stack.join(" -> ")} -> ${module.name}`
       );
     }
 
